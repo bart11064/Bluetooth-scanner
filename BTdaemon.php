@@ -68,7 +68,7 @@ class BTScanner {
 	private $_shm_id;		// Share memory ID (used for the python callback)
 	
 	private $_loopTime = 3;		// BT scan loop time
-	private $_timeOut = 240;	// Time is seconds before a tag is considered as absent - Use large value to avoid false absence detection
+	private $_timeOut = 60;	// Time is seconds before a tag is considered as absent - Use large value to avoid false absence detection
 	private $_debug;		// For debug purpose - Settled at Class construct time
 
 	public function __construct($debug = false) {
@@ -293,6 +293,10 @@ class BTScanner {
 						$this->_tags[$key]['state'] = 1;
 						$this->dbg("Active Tag found: $key\n");
 						$this->log("$key ACTIVE\n");
+					}
+					// resetting state if there was connection error within timeout
+					else if (!empty($x) and $device['state'] != 0) {
+						$this->_tags[$key]['state'] = 1;
 					}
 				}
 			}
