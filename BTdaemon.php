@@ -339,7 +339,7 @@ class BTScanner {
 			$this->_tags[$tagData[0]] = array("on" => $tagData[1], "off" => $tagData[2],"state" => 0, "ble" => $tagData[3]);
 			//For BLE devices add a last Seen field
 			if ($tagData[3] == '1') {$this->_tags[$tagData[0]] = array_merge($this->_tags[$tagData[0]],array("last" => 0));}
-			$this->callJeedomUrl($tagData[2]); // Send signal to the controller to set devices Off
+			// Don't want to force off on startup // $this->callJeedomUrl($tagData[2]); // Send signal to the controller to set devices Off
 		}
 		$nbTags = count($this->_tags);
 		$this->dbg("Adapter: $this->_adapter\n");
