@@ -100,14 +100,15 @@ class BTScanner {
 	// Launch the threads
 	public function run() {
 		pcntl_signal(SIGCHLD, SIG_IGN);
-		for ($i = 1; $i <= 2; ++$i) { // Launching 2 threads
+		// only BT // for ($i = 1; $i <= 2; ++$i) { // Launching 2 threads
+		for ($i = 1; $i <= 1; ++$i) {
 			$pid = pcntl_fork();
 			if($pid == -1) {
 				echo "ERROR FORK MAIN\n";
 			}
 			if (!$pid) {
 				if ($i==1) $this->threadBTScanner();
-				if ($i==2) $this->threadBLEScanner();
+				// only BT // if ($i==2) $this->threadBLEScanner();
 				exit(0);
 			}
 		}
@@ -115,7 +116,7 @@ class BTScanner {
 
 	// Stop the threads
 	public function stop() {
-		exec('sudo python BLE.py kill',$k); // Kill the python BLE scanner
+		// only BT // exec('sudo python BLE.py kill',$k); // Kill the python BLE scanner
 		if (!empty($k[0])) $this->dbg($k[0]."\n");
 		exec("ps aux | grep \"php $this->_me\" | grep -v grep | awk '{print $2}'",$pidList); // all Daemon processes
 		$mypid = array(getmypid()); // this process
